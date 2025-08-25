@@ -7,7 +7,7 @@ export default function Contact({ onBack, bossHP, damageBoss }) {
       <div className="boss-container">
         <div className="boss-character">
           <div className="boss-sprite">👾</div>
-          <div className="boss-name">Boss Name</div>
+          <div className="boss-name">BOMBARDINO CROCODILO</div>
           <div className="boss-hp">
             <span className="hp-label">HP</span>
             <div className="hp-bar">

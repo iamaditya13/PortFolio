@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useMemo} from "react";
 import "./App.css";
 import ScoreDisplay from "./components/ScoreDisplay";
 import LandingScreen from "./components/LandingScreen";
@@ -21,6 +21,21 @@ export default function App() {
   const [coinsCollected, setCoinsCollected] = useState(new Set());
   const [modal, setModal] = useState({ open: false, project: null });
   const [visitedScreens, setVisitedScreens] = useState(new Set());
+
+    const levelLabel = useMemo(
+      () =>
+        ({
+          landing: "START",
+          levelSelect: "SELECT",
+          about: "1",
+          projects: "2",
+          skills: "3",
+          achievements: "4",
+          contact: "BOSS",
+          gameOver: "END",
+        }[currentScreen] || "UNKNOWN"),
+      [currentScreen]
+    );
 
   const SCORE_RULES = {
     about: { points: 100, message: "📖 Discovered About Section!" },
@@ -80,11 +95,7 @@ export default function App() {
   return (
     <div>
       <div className="crt-overlay" />
-      <ScoreDisplay
-        lives={lives}
-        score={score}
-        currentLevel={currentScreen.toUpperCase()}
-      />
+      <ScoreDisplay lives={lives} score={score} currentLevel={levelLabel} />
 
       {popups.map((popup) => (
         <ScorePopup
@@ -97,6 +108,7 @@ export default function App() {
       {currentScreen === "landing" && (
         <LandingScreen onStart={() => navigateTo("levelSelect")} />
       )}
+
       {currentScreen === "levelSelect" && (
         <LevelSelect
           onSelect={navigateTo}

@@ -14,14 +14,18 @@ export default function About({ onBack }) {
           <div className="character-stats">
             <div className="stat-item">
               <span className="stat-label">LEVEL:</span>
-              <span className="stat-value">28</span>
+              <span className="stat-value">22</span>
             </div>
             <div className="stat-item">
               <span className="stat-label">EXP:</span>
-              <span className="stat-value">5,000+</span>
+              <span className="stat-value">--</span>
             </div>
             <div className="stat-item">
-              <span className="stat-label">COFFEE:</span>
+              <span className="stat-label">LOCATION:</span>
+              <span className="stat-value">Delhi</span>
+            </div>
+            <div className="stat-item">
+              <span className="stat-label">AURA:</span>
               <span className="stat-value">∞</span>
             </div>
           </div>
@@ -29,18 +33,20 @@ export default function About({ onBack }) {
         <div className="dialog-box">
           <div className="dialog-content">
             <p>
-              Passionate full-stack developer with a love for retro gaming
-              aesthetics and modern web technologies.
+              Enthusiastic software developer with strong problem-solving
+              skills, specializing in Data Structures and Algorithms using
+              Python.
             </p>
             <p>
-              I create pixel-perfect applications that bridge the gap between
-              nostalgic design and cutting-edge functionality.
+              Experienced in building scalable, full-stack applications with the
+              MERN stack.
             </p>
-            <p>Location: Delhi </p>
+            <p>
+              Passionate about writing clean, efficient code and crafting
+              seamless user experiences.
+            </p>
           </div>
-          <button className="press-start-btn" 
-          onClick={handleClick}
-          >
+          <button className="press-start-btn" onClick={handleClick}>
             Resume
           </button>
         </div>

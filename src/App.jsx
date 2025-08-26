@@ -10,6 +10,7 @@ import Achievements from "./components/Achievements";
 import Contact from "./components/Contact";
 import GameOver from "./components/GameOver";
 import ScorePopup from "./components/ScorePopup";
+import ProjectDetailsModal from "./components/ProjectDetailsModal";
 
 export default function App() {
   const [currentScreen, setCurrentScreen] = useState("landing");
@@ -18,6 +19,16 @@ export default function App() {
   const [bossHP, setBossHP] = useState(100);
   const [popups, setPopups] = useState([]);
   const [coinsCollected, setCoinsCollected] = useState(new Set());
+  const [modal, setModal] = useState({ open: false, project: null });
+  const [visitedScreens, setVisitedScreens] = useState(new Set());
+
+  const SCORE_RULES = {
+    about: { points: 100, message: "📖 Discovered About Section!" },
+    projects: { points: 200, message: "📂 Explored Projects!" },
+    skills: { points: 150, message: "🛠️ Skills Unlocked!" },
+    achievements: { points: 150, message: "🏆 Achievements Revealed!" },
+    contact: { points: 250, message: "📨 Boss Battle Engaged!" },
+  };
 
   const addScore = (points, message) => {
     setScore((prev) => prev + points);
@@ -36,10 +47,13 @@ export default function App() {
         setTimeout(() => setCurrentScreen("gameOver"), 2000);
       } else {
         setTimeout(() => {
-          if (lives > 1) {
-            setLives((l) => l - 1);
-            addScore(-100, "💢 BOSS COUNTER-ATTACK!");
-          }
+          setLives((prev) => {
+            if (prev > 1) {
+              addScore(-100, "💢 BOSS COUNTER-ATTACK!");
+              return prev - 1;
+            }
+            return prev;
+          });
         }, 1500);
       }
       return newHP;
@@ -53,7 +67,15 @@ export default function App() {
     }
   };
 
-  const navigateTo = (screen) => setCurrentScreen(screen);
+  const navigateTo = (screen) => {
+    setCurrentScreen(screen);
+
+    if (SCORE_RULES[screen] && !visitedScreens.has(screen)) {
+      const { points, message } = SCORE_RULES[screen];
+      addScore(points, message);
+      setVisitedScreens((prev) => new Set([...prev, screen]));
+    }
+  };
 
   return (
     <div>
@@ -91,6 +113,7 @@ export default function App() {
         <Projects
           onBack={() => navigateTo("levelSelect")}
           addScore={addScore}
+          onViewDetails={(project) => setModal({ open: true, project })}
         />
       )}
       {currentScreen === "skills" && (
@@ -111,6 +134,12 @@ export default function App() {
       )}
       {currentScreen === "gameOver" && (
         <GameOver score={score} restart={() => navigateTo("landing")} />
+      )}
+      {modal.open && (
+        <ProjectDetailsModal
+          project={modal.project}
+          onClose={() => setModal({ open: false, project: null })}
+        />
       )}
     </div>
   );

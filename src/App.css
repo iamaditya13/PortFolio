@@ -306,6 +306,7 @@ html {
   background-color: var(--color-background);
   -webkit-font-smoothing: antialiased;
   box-sizing: border-box;
+
 }
 
 body {
@@ -1190,6 +1191,9 @@ body {
     cursor: pointer;
     transition: all 0.3s ease;
     position: relative;
+    height: 300px; /* set a fixed height (tweak as needed) */
+  display: flex;
+  flex-direction: column;
 }
 
 .project-cartridge:hover {
@@ -1210,7 +1214,13 @@ body {
     text-align: center;
     position: relative;
     overflow: hidden;
+    flex: 1; /* makes body fill the available height */
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between; /* evenly spaces name, tech, status */
+  overflow: hidden; /* prevent overflow */
 }
+
 
 .cartridge-body::before {
     content: '';
@@ -1228,6 +1238,9 @@ body {
     margin-bottom: 15px;
     color: #fff;
     text-shadow: 0 0 10px rgba(0, 0, 0, 0.8);
+    text-overflow: ellipsis;
+  overflow: hidden;
+  white-space: nowrap;
 }
 
 .cartridge-tech {
@@ -1235,6 +1248,9 @@ body {
     color: rgba(255, 255, 255, 0.8);
     margin-bottom: 15px;
     font-family: 'VT323', monospace;
+    text-overflow: ellipsis;
+  overflow: hidden;
+  white-space: nowrap;
 }
 
 .cartridge-status {
@@ -1242,6 +1258,7 @@ body {
     padding: 5px 10px;
     border-radius: 4px;
     display: inline-block;
+    
 }
 
 .cartridge-status.completed {
